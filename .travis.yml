@@ -8,7 +8,7 @@ install:
   - echo install placeholder 
 
 before_script:
-  - before script placegholder
+  - echo before script placegholder
 
 script:
   - ./run_test.sh
