@@ -9,8 +9,12 @@ docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd set contract hello3 /m
 docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd get table hello3 tester keyval
 docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd create account eosio user EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ
 docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd create account eosio tester EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "testerabcd_38a", "BBBB"]' -p tester
+docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "tester", "value"]' -p tester
+docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "123456789012345678901234a", "25 characters aaaa"]' -p tester
+docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "123456789012345678901234b", "25 characters bbbb"]' -p tester
+docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["user", "123456789012345678901234b", "25 characters bbbb"]' -p user
 docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd get table hello3 tester keyval
+docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd get table hello3 user keyval
 
 docker-compose down
 
