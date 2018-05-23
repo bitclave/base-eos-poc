@@ -1,21 +1,30 @@
 #/bin/bash
+docker volume create --name=nodeos-data-volume
+docker volume create --name=keosd-data-volume
+
 docker-compose up -d
 
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd wallet create
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd wallet import 5Ji8rDYiuqTAzocRPgz6EdT9szM7ootSBeVDxNm6p2rsUCRn1Yh
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd wallet import 5JmEDUXG88AnikGzov8MZVESaN1zBscYbpiqJrS2SFUedqfUL8c
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd create account eosio hello3 EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ EOS5LSwDqyYt9a65ebYATJ2gqXhSxfaAi8Evpn9tz1w81tcD5N7Vy
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd set contract hello3 /mnt/contracts/hello
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd get table hello3 tester keyval
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd create account eosio user EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd create account eosio tester EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ EOS5g1it16cQG9aXZoHdTdG8abk2bA6Mk1ojEnw7bhJWvC28a81gJ
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "tester", "value"]' -p tester
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "123456789012345678901234a", "25 characters aaaa"]' -p tester
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["tester", "123456789012345678901234b", "25 characters bbbb"]' -p tester
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd push action hello3 addsec '["user", "123456789012345678901234b", "25 characters bbbb"]' -p user
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd get table hello3 tester keyval
-docker-compose exec keosd /opt/eosio/bin/cleos -H nodeosd get table hello3 user keyval
+alias cleos='docker-compose exec keosd /opt/eosio/bin/cleos -u http://nodeosd:8888 --wallet-url http://localhost:8888'
+
+cleos wallet create
+cleos wallet keys
+cleos wallet import 5KL5gTRpwyReTcKbY1qwUWiMBrKaz83iMFvyxaBaMcezWUNMWhi
+cleos wallet import 5JK6WvvxrDuyAsAUVhe2oypVjXtRE4kLfSQGrGH8EhGYtRU4LLN
+cleos create account eosio hello3 EOS5fsDMbSdBXEgWrUycajXU75gPZ3qkKeffrHcZp2rPdYrMfLyZ2 EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos set contract hello3 /mnt/contracts/hello
+cleos get table hello3 tester keyval
+cleos create account eosio user EOS5fsDMbSdBXEgWrUycajXU75gPZ3qkKeffrHcZp2rPdYrMfLyZ2 EOS5fsDMbSdBXEgWrUycajXU75gPZ3qkKeffrHcZp2rPdYrMfLyZ2
+cleos create account eosio tester EOS5fsDMbSdBXEgWrUycajXU75gPZ3qkKeffrHcZp2rPdYrMfLyZ2 EOS5fsDMbSdBXEgWrUycajXU75gPZ3qkKeffrHcZp2rPdYrMfLyZ2
+cleos push action hello3 addsec '["tester", "tester", "value"]' -p tester
+cleos push action hello3 addsec '["tester", "123456789012345678901234a", "25 characters aaaa"]' -p tester
+cleos push action hello3 addsec '["tester", "123456789012345678901234b", "25 characters bbbb"]' -p tester
+cleos push action hello3 addsec '["user", "123456789012345678901234b", "25 characters bbbb"]' -p user
+cleos get table hello3 tester keyval
+cleos get table hello3 user keyval
 
 docker-compose down
+docker volume rm nodeos-data-volume
+docker volume rm keosd-data-volume
+
 
 
