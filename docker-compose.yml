@@ -2,8 +2,6 @@ version: "3"
 
 services:
   nodeosd:
-    build:
-      context: .
     image: eosio/eos:dawn-v4.0.0
 #    image: eosio/eos:latest
     command: /opt/eosio/bin/nodeosd.sh --data-dir /opt/eosio/bin/data-dir
