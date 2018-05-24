@@ -6,6 +6,7 @@ docker-compose up -d
 
 alias cleos='docker-compose exec keosd /opt/eosio/bin/cleos -u http://nodeosd:8888 --wallet-url http://localhost:8888'
 
+cleos get info
 cleos wallet create
 cleos wallet keys
 cleos wallet import 5KL5gTRpwyReTcKbY1qwUWiMBrKaz83iMFvyxaBaMcezWUNMWhi
